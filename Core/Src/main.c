@@ -61,8 +61,11 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
- uint8_t RxAddress[] ={0xEE, 0xDD, 0xCC, 0xBB, 0xAA};
- uint8_t Rxdata[32];
+uint8_t RxAddress[] = {0x00,0xDD,0xCC,0xBB,0xAA};
+uint8_t RxData[32];
+
+
+uint8_t data[50];
 /* USER CODE END 0 */
 
 /**
@@ -96,8 +99,12 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  init_device();
-  nrf_rxmode(RxAddress, 10);
+//  init_device();
+//  nrf_rxmode(RxAddress, 10);
+  NRF24_Init();
+
+    NRF24_RxMode(RxAddress, 10);
+    NRF24_ReadAll(data);
 
   /* USER CODE END 2 */
 
@@ -108,10 +115,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  if(data_check(1)==1){
-		  receive_data(Rxdata);
-		  HAL_UART_Transmit(&huart2, Rxdata, 32, 1000);
-	  }
+	  if (isDataAvailable(2) == 1)
+	 	  {
+	 		  NRF24_Receive(RxData);
+	 		  HAL_UART_Transmit(&huart2, RxData, strlen((char *)RxData), 1000);
+	 	  }
   }
   /* USER CODE END 3 */
 }
@@ -237,6 +245,7 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, CS_PIN_Pin|CE_PIN_Pin, GPIO_PIN_RESET);

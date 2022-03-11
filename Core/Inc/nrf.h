@@ -1,20 +1,18 @@
-/*
- * nrf.h
- *
- *  Created on: Dec 4, 2021
- *      Author: KIIT
- */
+#ifndef INC_NRF24L01_H_
+#define INC_NRF24L01_H_
 
-#ifndef INC_NRF_H_
-#define INC_NRF_H_
 
-void init_device(void);
-void enable_txmode(uint8_t *Address, uint8_t channel);
-uint8_t data_transmit(uint8_t *data);
-void nrf_rxmode(uint8_t *Address, uint8_t channel);
-uint8_t data_check(int pipenum);
-void receive_data(uint8_t *data);
 
+void NRF24_Init (void);
+
+void NRF24_TxMode (uint8_t *Address, uint8_t channel);
+uint8_t NRF24_Transmit (uint8_t *data);
+
+void NRF24_RxMode (uint8_t *Address, uint8_t channel);
+uint8_t isDataAvailable (int pipenum);
+void NRF24_Receive (uint8_t *data);
+
+void NRF24_ReadAll (uint8_t *data);
 
 /* Memory Map */
 #define CONFIG      0x00
@@ -58,4 +56,6 @@ void receive_data(uint8_t *data);
 #define REUSE_TX_PL   0xE3
 #define NOP           0xFF
 
-#endif /* INC_NRF_H_ */
+
+#endif /* INC_NRF24L01_H_ */
+
