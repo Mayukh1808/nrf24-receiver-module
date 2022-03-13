@@ -245,7 +245,6 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, CS_PIN_Pin|CE_PIN_Pin, GPIO_PIN_RESET);
@@ -272,9 +271,9 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
-  while (1)
-  {
-  }
+ // while (1)
+  //{
+  //}
   /* USER CODE END Error_Handler_Debug */
 }
 
